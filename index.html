@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Painel de Resultados-Chave</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand-lockup">
+        <img class="brand-logo" src="logo-pmmg.png" alt="Escudo da PMMG" />
+        <div>
+          <p class="eyebrow">GDA 2ª Edição</p>
+          <h1>Painel de Resultados-Chave</h1>
+        </div>
+      </div>
+      <nav class="top-nav" aria-label="Navegação principal">
+        <a href="#resumo">Resumo</a>
+        <a href="#krs">KRs</a>
+        <a class="nav-emphasis" href="atualizacoes.html">Atualizações</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="cover-band" aria-label="Identidade visual do painel">
+        <div class="cover-copy">
+          <p class="eyebrow">Gestão do Desempenho Administrativo</p>
+          <h2>Visão executiva dos resultados-chave</h2>
+          <p>
+            Monitoramento dinâmico dos KRs da 2ª edição, com leitura rápida por status,
+            UDI, prioridade e trâmite atual.
+          </p>
+        </div>
+        <div class="cover-art" aria-hidden="true">
+          <span class="tri tri-one"></span>
+          <span class="tri tri-two"></span>
+          <span class="tri tri-three"></span>
+          <img src="capa-gda.png" alt="" />
+        </div>
+      </section>
+
+      <section id="resumo" class="summary-grid" aria-label="Resumo de status">
+        <article class="metric-card total">
+          <span>Total de KRs</span>
+          <strong id="totalKrs">0</strong>
+          <small id="sourceNote">Fonte: planilha</small>
+        </article>
+        <article class="metric-card status-progress">
+          <span>Em andamento</span>
+          <strong id="progressCount">0</strong>
+          <div class="mini-bar"><span id="progressBar"></span></div>
+        </article>
+        <article class="metric-card status-done">
+          <span>Concluídos</span>
+          <strong id="doneCount">0</strong>
+          <div class="mini-bar"><span id="doneBar"></span></div>
+        </article>
+        <article class="metric-card status-alert">
+          <span>Atenção</span>
+          <strong id="attentionCount">0</strong>
+          <small>Suspensos ou sem status</small>
+        </article>
+      </section>
+
+      <section class="filters-panel" aria-label="Filtros">
+        <label class="search-box">
+          <span>Buscar KR</span>
+          <input id="searchInput" type="search" placeholder="Digite uma palavra-chave" />
+        </label>
+        <label>
+          <span>Status</span>
+          <select id="statusFilter"></select>
+        </label>
+        <label>
+          <span>UDI</span>
+          <select id="udiFilter"></select>
+        </label>
+        <label>
+          <span>Classificação</span>
+          <select id="classFilter"></select>
+        </label>
+        <label>
+          <span>Prioridade</span>
+          <select id="priorityFilter"></select>
+        </label>
+        <label class="ado-filter-control">
+          <input id="adoPriorityFilter" type="checkbox" />
+          <span>Prioridade ADO</span>
+        </label>
+        <button id="clearFilters" type="button">Limpar</button>
+      </section>
+
+      <section id="analise" class="analysis-grid">
+        <article class="panel">
+          <div class="panel-title">
+            <h2>Status 2026</h2>
+            <span id="visibleCount">0 visíveis</span>
+          </div>
+          <div id="statusChart" class="bar-chart" aria-label="Distribuição por status"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-title">
+            <h2>UDIs com mais KRs</h2>
+            <span>Top 8</span>
+          </div>
+          <div id="udiChart" class="rank-chart" aria-label="Ranking de UDIs"></div>
+        </article>
+      </section>
+
+      <section id="krs" class="results-section">
+        <div class="section-title">
+          <div>
+            <h2>Resultados-Chave</h2>
+            <p>Use os filtros para alternar a visão do painel.</p>
+          </div>
+          <div class="view-toggle" aria-label="Modo de visualização">
+            <button id="cardView" type="button" class="active">Cartões</button>
+            <button id="tableView" type="button">Tabela</button>
+          </div>
+        </div>
+        <div id="cards" class="kr-grid"></div>
+        <div id="tableWrap" class="table-wrap hidden">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>UDI</th>
+                <th>KR</th>
+                <th>Prioridade</th>
+                <th>Trâmite</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="detailDialog">
+      <div class="dialog-head">
+        <h2 id="dialogTitle">Resultado-Chave</h2>
+        <button id="closeDialog" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div id="dialogBody" class="dialog-body"></div>
+    </dialog>
+
+    <dialog id="udiLoginDialog">
+      <form id="udiLoginForm" method="dialog">
+        <div class="dialog-head">
+          <h2 id="udiLoginTitle">Acesso da UDI</h2>
+          <button id="closeUdiLoginDialog" type="button" aria-label="Fechar">Ã—</button>
+        </div>
+        <div class="dialog-body">
+          <p id="udiLoginMessage" class="login-hint"></p>
+          <label>
+            <span>Login</span>
+            <input id="udiLoginInput" type="text" autocomplete="username" required />
+          </label>
+          <label>
+            <span>Senha</span>
+            <input id="udiPasswordInput" type="password" autocomplete="current-password" required />
+          </label>
+          <p id="udiLoginError" class="form-error" role="alert"></p>
+          <div class="form-actions">
+            <button type="button" id="cancelUdiLogin">Cancelar</button>
+            <button type="submit">Entrar</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="updateDialog">
+      <form id="updateForm" method="dialog">
+        <div class="dialog-head">
+          <h2>Atualizar KR</h2>
+          <button id="closeUpdateDialog" type="button" aria-label="Fechar">×</button>
+        </div>
+        <div class="dialog-body">
+          <input id="updateKrId" type="hidden" />
+          <div class="detail-item">
+            <span>Resultado-Chave</span>
+            <strong id="updateKrTitle"></strong>
+          </div>
+          <div class="detail-grid">
+            <label>
+              <span>Ano de referência</span>
+              <select id="yearInput" required>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026" selected>2026</option>
+                <option value="2027">2027</option>
+              </select>
+            </label>
+            <label>
+              <span>Status atual</span>
+              <input id="currentStatusInput" type="text" readonly />
+            </label>
+            <label>
+              <span>Novo status</span>
+              <select id="newStatusInput" required>
+                <option value="A iniciar">A iniciar</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluído">Concluído</option>
+                <option value="Suspenso">Suspenso</option>
+                <option value="Sem status">Sem status</option>
+              </select>
+            </label>
+            <label>
+              <span>Responsável pela atualização</span>
+              <input id="responsibleInput" type="text" required placeholder="Nome do responsável" />
+            </label>
+            <label>
+              <span>E-mail/Matrícula</span>
+              <input id="identifierInput" type="text" placeholder="Opcional" />
+            </label>
+          </div>
+          <label>
+            <span>Descrição da atualização</span>
+            <textarea id="updateDescriptionInput" required placeholder="Descreva a evolução, decisão ou pendência do KR."></textarea>
+          </label>
+          <label>
+            <span>Comprovação</span>
+            <input id="proofInput" type="file" required />
+          </label>
+          <label>
+            <span>Observações</span>
+            <textarea id="notesInput" placeholder="Opcional"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="button" id="cancelUpdate">Cancelar</button>
+            <button type="submit">Salvar atualização</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

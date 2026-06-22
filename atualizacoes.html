@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atualizações dos KRs</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand-lockup">
+        <img class="brand-logo" src="logo-pmmg.png" alt="Escudo da PMMG" />
+        <div>
+          <p class="eyebrow">GDA 2ª Edição</p>
+          <h1>Atualizações dos KRs</h1>
+        </div>
+      </div>
+      <nav class="top-nav" aria-label="Navegação principal">
+        <a href="index.html">Painel principal</a>
+        <a class="nav-emphasis" href="#lista-atualizacoes">Lista de atualizações</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="loginPanel" class="login-panel" aria-label="Login de acesso às atualizações">
+        <div>
+          <p class="eyebrow">Acesso restrito</p>
+          <h2>Lista de atualizações</h2>
+          <p>Informe login e senha para acessar o histórico dos KRs.</p>
+        </div>
+        <form id="loginForm" class="login-form">
+          <label>
+            <span>Login</span>
+            <input id="loginInput" type="text" autocomplete="username" required />
+          </label>
+          <label>
+            <span>Senha</span>
+            <input id="passwordInput" type="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Entrar</button>
+          <p id="loginMessage" class="login-message" role="alert"></p>
+        </form>
+      </section>
+
+      <div id="protectedContent" class="hidden">
+      <section class="cover-band compact-cover" aria-label="Controle de atualizações">
+        <div class="cover-copy">
+          <p class="eyebrow">Banco de atualizações</p>
+          <h2>Histórico de status e comprovações</h2>
+          <p>
+            Acompanhe os registros enviados pelos responsáveis e baixe os comprovantes anexados
+            quando necessário.
+          </p>
+        </div>
+        <div class="cover-art" aria-hidden="true">
+          <span class="tri tri-one"></span>
+          <span class="tri tri-two"></span>
+          <span class="tri tri-three"></span>
+          <img src="capa-gda.png" alt="" />
+        </div>
+      </section>
+
+      <section id="lista-atualizacoes" class="updates-panel" aria-label="Atualizações dos responsáveis">
+        <div class="section-title">
+          <div>
+            <h2>Lista de atualizações</h2>
+            <p>Registros salvos neste navegador. A exportação para Excel inclui todo o histórico, mesmo após limpar a visualização.</p>
+          </div>
+          <div class="card-actions">
+            <button id="logoutButton" type="button">Sair</button>
+            <button id="exportUpdates" type="button">Exportar atualizações</button>
+            <button id="clearUpdates" type="button">Limpar visualização</button>
+          </div>
+        </div>
+        <div class="updates-summary">
+          <span class="badge"><strong id="updatesCount">0</strong>&nbsp; registros</span>
+          <span class="badge">Última atualização: <strong id="lastUpdateLabel">nenhuma</strong></span>
+        </div>
+        <div id="updatesList" class="updates-list"></div>
+      </section>
+      </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="atualizacoes.js"></script>
+  </body>
+</html>
